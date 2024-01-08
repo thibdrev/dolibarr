@@ -111,6 +111,33 @@ if (!function_exists('str_contains')) {
 	}
 }
 
+/**
+ * Return if the value has a valid Luhn check digit
+ *
+ * @param string|int $value Value to validate
+ * @return bool		True if the luhn check digit is valid
+ * @since Dolibarr V20
+ */
+function validate_luhn($value)
+{
+	$value = (string) $value;// Make sure it is a string.
+	// Validate the Luhn check digit
+	// - Double digit value every other digit.
+	// - Compute the sum
+	$sum = 0;
+	$even = false;
+	for ($i = strlen($value) - 1; $i >= 0; $i--) {
+		$num = (int) $value[$i];
+		if ($even) {
+			$num *= 2;
+			$num = ($num % 10) + (int) ($num / 10);
+		}
+		$even = !$even;
+		$sum += $num;
+	}
+	return ( ($sum % 10) == 0 );
+}
+
 
 /**
  * Return the full path of the directory where a module (or an object of a module) stores its files. Path may depends on the entity if a multicompany module is enabled.
