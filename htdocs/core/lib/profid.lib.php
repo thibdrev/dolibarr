@@ -39,11 +39,11 @@ function isValidLuhn($str)
 		$d = (int) $str[$i];
 		if ($i % 2 == $parity) {
 			if (($d *= 2) > 9) {
-				$d -= 9; 
+				$d -= 9;
 			}
 		}
 		$sum += $d;
-    }
+	}
 	return $sum % 10 == 0;
 }
 
